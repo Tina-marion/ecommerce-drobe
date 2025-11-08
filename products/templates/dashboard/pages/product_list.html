@@ -97,6 +97,16 @@
     background: rgba(255, 255, 255, 0.95);
   }
 
+  /* Label / text fit improvements: keep labels readable, allow wrapping, and reduce size on small screens */
+  .filter-section .form-label {
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+    white-space: normal; /* allow wrapping */
+    overflow-wrap: anywhere; /* break long words if needed */
+    word-break: break-word;
+    display: block;
+  }
+
   .filter-section .btn-primary {
     background: var(--primary-gradient);
     border: none;
@@ -316,6 +326,10 @@
 
     .filter-section {
       padding: 1.5rem;
+    }
+
+    .filter-section .form-label {
+      font-size: 0.82rem;
     }
 
     .pagination {

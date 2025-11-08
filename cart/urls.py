@@ -1,8 +1,9 @@
 from django.urls import path
+from django.views.generic import TemplateView
 
-# Minimal URL patterns for the cart app. Add real patterns here as the app
-# is developed. Keeping this file non-empty prevents Django checks from
-# failing when included in the project `urls.py`.
+# Minimal URL patterns for the cart app. A placeholder view/template is
+# provided so templates can reverse 'cart_detail' until the real cart
+# implementation exists.
 urlpatterns = [
-	# Example: path('', views.cart_detail, name='cart_detail'),
+    path('', TemplateView.as_view(template_name='cart/detail.html'), name='cart_detail'),
 ]

@@ -9,6 +9,15 @@ session data isn't present or malformed.
 from typing import Dict
 
 from django.http import HttpRequest
+from django.urls import reverse
+
+# Import Product lazily to avoid import-time cycles in some settings
+def _get_product_model():
+    try:
+        from products.models import Product
+        return Product
+    except Exception:
+        return None
 
 
 def cart_count(request: HttpRequest) -> Dict[str, int]:
@@ -28,3 +37,39 @@ def cart_count(request: HttpRequest) -> Dict[str, int]:
     except Exception:
         total = 0
     return {"cart_count": total}
+
+
+def cart_preview(request: HttpRequest) -> Dict[str, object]:
+    """Return a small preview of cart items for the navbar.
+
+    Returns {'cart_items': [ {id, name, quantity, price, image, url}, ... ]}
+    Limits to first 3 items to keep templates lightweight.
+    """
+    cart = request.session.get('cart', {})
+    Product = _get_product_model()
+    items = []
+    try:
+        if isinstance(cart, dict) and Product is not None:
+            # cart keys are product IDs as strings
+            ids = [int(pid) for pid in list(cart.keys())[:10] if str(pid).isdigit()]
+            products = {p.id: p for p in Product.objects.filter(id__in=ids)}
+            for pid_str in list(cart.keys())[:3]:
+                try:
+                    pid = int(pid_str)
+                except Exception:
+                    continue
+                item_data = cart.get(pid_str, {})
+                product = products.get(pid)
+                if not product:
+                    continue
+                items.append({
+                    'id': product.id,
+                    'name': product.name,
+                    'quantity': int(item_data.get('quantity', 0)),
+                    'price': str(product.price),
+                    'image': getattr(product.image, 'url', ''),
+                    'url': reverse('product_detail', kwargs={'pk': product.pk}),
+                })
+    except Exception:
+        items = []
+    return {'cart_items': items}

@@ -1,5 +1,6 @@
 from . import views
 from django.urls import path
+from django.views.generic import TemplateView
 from .views import (
     BrandListView, BrandCreateView, BrandUpdateView, BrandDeleteView,
     ProductListView, ProductCreateView, ProductUpdateView, ProductDeleteView,
@@ -37,5 +38,8 @@ urlpatterns = [
     path('discounts/add/', DiscountCreateView.as_view(), name='discount-add'),
     path('discounts/<int:pk>/edit/', DiscountUpdateView.as_view(), name='discount-edit'),
     path('discounts/<int:pk>/delete/', DiscountDeleteView.as_view(), name='discount-delete'),
+
+    # Orders (placeholder) - resolves sidebar link until full orders app is implemented
+    path('orders/', TemplateView.as_view(template_name='dashboard/pages/order_list.html'), name='order-list'),
 
 ]

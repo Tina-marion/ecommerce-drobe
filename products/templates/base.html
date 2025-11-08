@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Dashboard{% endblock %}</title>
 
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome -->
@@ -17,6 +21,11 @@
         body {
             overflow-x: hidden; /* Prevent horizontal scroll */
             margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background-color: #f8fafc;
+            color: #111827;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         #wrapper {
             display: flex;
@@ -152,6 +161,28 @@
 .cart-link .fa-shopping-cart:hover {
     transform: scale(1.2);
     transition: transform 0.3s;
+}
+
+/* Cart badge override to be more visible */
+.cart-badge {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.45rem;
+    border-radius: 999px;
+}
+
+/* Brand tweaks */
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #1f2937 !important;
+}
+
+/* Tighter container spacing on smaller screens */
+@media (max-width: 768px) {
+    #page-content-wrapper .container-fluid, #page-content-wrapper .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
 }
 
 /* Optional: subtle shadow (already added via shadow-sm class) */

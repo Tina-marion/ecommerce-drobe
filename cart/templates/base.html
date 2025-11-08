@@ -1,0 +1,6 @@
+{# Proxy base template: extend the project's main base so app-specific empty
+	base.html files don't shadow the real layout. This keeps `base.html`
+	importable while delegating rendering to `products/templates/base.html`. #}
+{% extends 'products/base.html' %}
+
+{% block content %}{% endblock %}
